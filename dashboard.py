@@ -154,7 +154,6 @@ def set_up_main_dataframe_knowhow_data(df_filtered_by_career):
     return df_knowledge
 
 ############################### STREAMLIT APP ################################################
-st.set_page_config(layout='wide')
 
 with st.sidebar:
     career = st.radio(
