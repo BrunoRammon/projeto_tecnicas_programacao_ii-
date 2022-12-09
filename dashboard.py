@@ -167,7 +167,26 @@ df_career = set_up_main_dataframe_career_data(df_main)
 df_knowledge = set_up_main_dataframe_knowhow_data(df_main)
 
 
+st.header('Introdução')
+st.write("""
+No período entre 18 de outubro de 2021 e 6 de dezembro de 2021, a maior comunidade de dados do Brasil,o Data Hackers juntamente com a consultoria global Bain & Company realizaram uma pesquisa por meio da aplicação de um questionário online, cujo objetivo é mapear o mercado profissional de dados brasileiro. A pesquisa compreendeu as seguintes dimensões:
+
+(1) dados demográficos, (2) dados sobre a carreira, (3) desafios de gestores de times de dados, (4) conhecimentos na área de dados, (5) objetivos na área de dados, (6) conhecimentos de engenharia de dados, (7) análise de dados, (8) ciência de dados, e (9) engajamento com a comunidade DH.
+
+Em Maio de 2022, foram abertos os dados da pesquisa, para que a comunidade pudesse realizar suas próprias análises, concorrendo a prêmios, mas também podendo contar com o privilégio de grandes profissionais da área como jurados dessa competição.
+""")
+
 st.header('Descrição de base de dados')
+col1, col2, col3 = st.columns(3)
+col1.metric("Respostas:", "2645")
+col2.metric("Vivem no Brasil:", "2592")
+col3.metric("Trabalham (AD | CD | ED):", "1635")
+st.metric(
+    label='',
+    value=len(df_dem),
+    delta=f"Profissionais da área de {career}",
+    delta_color = 'off'
+)
 st.markdown('#### Parte 1 - Dados demográficos')
 st.markdown('- Faixa idade')
 st.markdown('- Regiao onde mora')
@@ -306,13 +325,15 @@ df_salary_gender = pd.concat([df_career['Faixa salarial'],df_dem['Genero']],axis
 df_salary_gender = df_salary_gender.sort_index(key=lambda x : x.map(salary_order))
 
 
-st.pyplot(plot_heat_map(df_salary_exp,annotate=True,figsize=(7,13),
+st.pyplot(plot_heat_map(df_salary_exp.T,annotate=True,figsize=(9,6),
 title='Faixa salarial em relação ao tempo de experiência na área'))
 
-st.pyplot(plot_heat_map(df_salary_nivel,annotate=True,figsize=(3,13),
+st.pyplot(plot_heat_map(df_salary_nivel.T,annotate=True,figsize=(6,3),
 title='Faixa salarial em relação a senioridade'))
-
-st.pyplot(plot_heat_map(df_salary_gender,annotate=True,figsize=(3,4),
+st.write('')
+st.write('')
+st.write('')
+st.pyplot(plot_heat_map(df_salary_gender.T,annotate=True,figsize=(8,3),
     title='Faixa salarial em relação ao gênero'))
 
 #plot 8
@@ -365,6 +386,10 @@ cor = 'orangered'
 x_label = 'Ferramentas de B.I.'
 y_label = 'Quantidade'
 st.plotly_chart(bar_plotly(df_knowledge,pergunta,titulo,cor,x_label,y_label,top=10))
+
+st.write('')
+st.write('')
+st.write('')
 
 #plot 13
 pergunta = 'Quais das opções de Cloud listadas abaixo você utiliza no trabalho?'
