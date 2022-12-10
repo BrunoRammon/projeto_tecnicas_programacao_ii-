@@ -84,7 +84,7 @@ def stacked_bar(dados,titulo):
     return fig
 
 def bar_plotly(df,pergunta,titulo,cor,x_label,y_label,top=0):
-    respostas = list(df[pergunta])[1:]
+    respostas = list(df[pergunta])[:]
     if not top:
         top = len(respostas)
     dados = df[pergunta][respostas].sum().sort_values(ascending=False).to_frame()[:top]
@@ -167,7 +167,8 @@ df_career = set_up_main_dataframe_career_data(df_main)
 df_knowledge = set_up_main_dataframe_knowhow_data(df_main)
 
 
-st.header('Introdução')
+st.header('Um visão geral dos diferentes perfis de profissionais de dados')
+st.markdown('#### Introdução')
 st.write("""
 No período entre 18 de outubro de 2021 e 6 de dezembro de 2021, a maior comunidade de dados do Brasil,o Data Hackers juntamente com a consultoria global Bain & Company realizaram uma pesquisa por meio da aplicação de um questionário online, cujo objetivo é mapear o mercado profissional de dados brasileiro. A pesquisa compreendeu as seguintes dimensões:
 
@@ -176,7 +177,7 @@ No período entre 18 de outubro de 2021 e 6 de dezembro de 2021, a maior comunid
 Em Maio de 2022, foram abertos os dados da pesquisa, para que a comunidade pudesse realizar suas próprias análises, concorrendo a prêmios, mas também podendo contar com o privilégio de grandes profissionais da área como jurados dessa competição.
 """)
 
-st.header('Descrição de base de dados')
+st.markdown('### Descrição de base de dados')
 col1, col2, col3 = st.columns(3)
 col1.metric("Respostas:", "2645")
 col2.metric("Vivem no Brasil:", "2592")
