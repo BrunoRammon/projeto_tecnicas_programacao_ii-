@@ -9,7 +9,7 @@ import streamlit as st
 # Initial setting up 
 pd.set_option('display.max_columns', 500)
 # plt.rcParams['figure.figsize'] = [24, 9]
-# plt.rcParams['font.size'] = 40
+# plt.rcParams['font.size'] = 24
 sns.set()
 
 # Functions
@@ -70,7 +70,7 @@ def plot_heat_map(dataframe,annotate,figsize,title=''):
 
 
 def stacked_bar(dados,titulo):
-    fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=(4, 3))
     dados.plot(kind='bar', stacked=True, rot=0,width = 0.35, ax=ax)
     plt.title(label= titulo ,fontsize=15)
     plt.gca().set_frame_on(False)
@@ -154,7 +154,7 @@ def set_up_main_dataframe_knowhow_data(df_filtered_by_career):
     return df_knowledge
 
 ############################### STREAMLIT APP ################################################
-
+# plt.rcParams.update({'font.size': 5})
 with st.sidebar:
     career = st.radio(
         "Selecione o tipo de gráfico",
@@ -168,6 +168,12 @@ df_knowledge = set_up_main_dataframe_knowhow_data(df_main)
 
 
 st.header('Descrição de base de dados')
+st.metric(
+    label="Número",
+    value=len(df_dem),
+    delta="pessoas",
+    delta_color = "off"
+)
 st.markdown('#### Parte 1 - Dados demográficos')
 st.markdown('- Faixa idade')
 st.markdown('- Regiao onde mora')
@@ -306,13 +312,13 @@ df_salary_gender = pd.concat([df_career['Faixa salarial'],df_dem['Genero']],axis
 df_salary_gender = df_salary_gender.sort_index(key=lambda x : x.map(salary_order))
 
 
-st.pyplot(plot_heat_map(df_salary_exp,annotate=True,figsize=(7,13),
+st.pyplot(plot_heat_map(df_salary_exp.T,annotate=True,figsize=(8,5),
 title='Faixa salarial em relação ao tempo de experiência na área'))
 
-st.pyplot(plot_heat_map(df_salary_nivel,annotate=True,figsize=(3,13),
+st.pyplot(plot_heat_map(df_salary_nivel.T,annotate=True,figsize=(7,2),
 title='Faixa salarial em relação a senioridade'))
 
-st.pyplot(plot_heat_map(df_salary_gender,annotate=True,figsize=(3,4),
+st.pyplot(plot_heat_map(df_salary_gender.T,annotate=True,figsize=(7,2),
     title='Faixa salarial em relação ao gênero'))
 
 #plot 8
